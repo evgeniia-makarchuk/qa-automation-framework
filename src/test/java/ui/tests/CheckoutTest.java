@@ -1,0 +1,28 @@
+package ui.tests;
+
+import base.BaseUiTest;
+import org.testng.annotations.Test;
+import ui.pages.LoginPage;
+
+import static data.CheckoutData.FIRST_NAME;
+import static data.CheckoutData.LAST_NAME;
+import static data.CheckoutData.POSTAL_CODE;
+import static data.users.UserType.STANDARD_USER;
+
+public class CheckoutTest extends BaseUiTest {
+
+    @Test
+    public void successfulCheckoutTest() {
+        new LoginPage()
+                .openPage()
+                .login(STANDARD_USER.getUsername(), STANDARD_USER.getPassword())
+                .shouldBeOpened()
+                .addBackpackToCart()
+                .openCart()
+                .shouldContainBackpack()
+                .clickCheckout()
+                .fillCustomerInfo(FIRST_NAME, LAST_NAME, POSTAL_CODE)
+                .finishOrder()
+                .shouldShowSuccessMessage();
+    }
+}
