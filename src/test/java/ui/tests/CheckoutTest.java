@@ -8,6 +8,7 @@ import static data.CheckoutData.FIRST_NAME;
 import static data.CheckoutData.LAST_NAME;
 import static data.CheckoutData.POSTAL_CODE;
 import static data.users.UserType.STANDARD_USER;
+import static data.CheckoutErrorMessages.FIRST_NAME_REQUIRED;
 
 public class CheckoutTest extends BaseUiTest {
 
@@ -22,7 +23,24 @@ public class CheckoutTest extends BaseUiTest {
                 .shouldContainBackpack()
                 .clickCheckout()
                 .fillCustomerInfo(FIRST_NAME, LAST_NAME, POSTAL_CODE)
+                .clickContinue()
                 .finishOrder()
                 .shouldShowSuccessMessage();
+    }
+
+    @Test
+    public void checkoutWithoutFirstNameTest() {
+        new LoginPage()
+                .openPage()
+                .login(STANDARD_USER.getUsername(), STANDARD_USER.getPassword())
+                .shouldBeOpened()
+                .addBackpackToCart()
+                .openCart()
+                .shouldContainBackpack()
+                .clickCheckout()
+                .setLastName(LAST_NAME)
+                .setPostalCode(POSTAL_CODE)
+                .clickContinue()
+                .shouldShowError(FIRST_NAME_REQUIRED);
     }
 }
