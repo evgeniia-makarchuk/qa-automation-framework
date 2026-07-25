@@ -1,21 +1,16 @@
 package base;
 
-import com.codeborne.selenide.Configuration;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import ui.config.SelenideConfig;
 
 import static com.codeborne.selenide.Selenide.closeWebDriver;
 
 public class BaseUiTest {
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void setUp() {
-
-        Configuration.browser = "chrome";
-        Configuration.baseUrl = "https://www.saucedemo.com";
-
-        Configuration.browserSize = "1920x1080";
-        Configuration.timeout = 10000;
+        SelenideConfig.configure();
     }
 
     @AfterMethod(alwaysRun = true)
