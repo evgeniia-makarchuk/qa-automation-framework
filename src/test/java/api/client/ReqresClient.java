@@ -1,8 +1,6 @@
 package api.client;
 
-import api.models.CreateUserRequest;
-import api.models.CreateUserResponse;
-import api.models.UserResponse;
+import api.models.*;
 import io.restassured.response.Response;
 
 public class ReqresClient extends BaseApiClient {
@@ -42,5 +40,21 @@ public class ReqresClient extends BaseApiClient {
         return requestSpec()
                 .when()
                 .delete("/api/users/" + userId);
+    }
+
+    public Response updateUserResponse(int userId, UpdateUserRequest request) {
+        return requestSpec()
+                .body(request)
+                .when()
+                .put("/api/users/" + userId);
+    }
+
+    public UpdateUserResponse updateUser(int userId, UpdateUserRequest request) {
+        return updateUserResponse(userId, request)
+                .then()
+                .log().all()
+                .statusCode(200)
+                .extract()
+                .as(UpdateUserResponse.class);
     }
 }
