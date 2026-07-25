@@ -57,4 +57,16 @@ public class ReqresClient extends BaseApiClient {
                 .extract()
                 .as(UpdateUserResponse.class);
     }
+
+    public UsersListResponse getUsers(int page) {
+        return requestSpec()
+                .queryParam("page", page)
+                .when()
+                .get("/api/users")
+                .then()
+                .log().all()
+                .statusCode(200)
+                .extract()
+                .as(UsersListResponse.class);
+    }
 }
