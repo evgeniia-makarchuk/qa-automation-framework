@@ -37,4 +37,10 @@ public class ReqresClient extends BaseApiClient {
                 .extract()
                 .as(CreateUserResponse.class);
     }
+
+    public Response deleteUser(int userId) {
+        return requestSpec()
+                .when()
+                .delete("/api/users/" + userId);
+    }
 }
