@@ -2,12 +2,16 @@ package api.models;
 
 public class CreateUserRequest {
 
-    private String name;
-    private String job;
+    private final String name;
+    private final String job;
 
-    public CreateUserRequest(String name, String job) {
-        this.name = name;
-        this.job = job;
+    private CreateUserRequest(Builder builder) {
+        this.name = builder.name;
+        this.job = builder.job;
+    }
+
+    public static Builder builder() {
+        return new Builder();
     }
 
     public String getName() {
@@ -16,5 +20,25 @@ public class CreateUserRequest {
 
     public String getJob() {
         return job;
+    }
+
+    public static class Builder {
+
+        private String name;
+        private String job;
+
+        public Builder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder job(String job) {
+            this.job = job;
+            return this;
+        }
+
+        public CreateUserRequest build() {
+            return new CreateUserRequest(this);
+        }
     }
 }

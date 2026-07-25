@@ -3,7 +3,6 @@ package api.tests;
 import api.client.ReqresClient;
 import api.models.CreateUserRequest;
 import api.models.CreateUserResponse;
-import base.BaseUiTest;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
@@ -16,17 +15,16 @@ public class CreateUserApiTest {
     @Test
     public void createUserTest() {
 
-        CreateUserRequest request =
-                new CreateUserRequest(
-                        "Evgeniia",
-                        "QA Automation Engineer"
-                );
+        CreateUserRequest request = CreateUserRequest.builder()
+                .name("Evgeniia")
+                .job("QA Automation Engineer")
+                .build();
 
         CreateUserResponse response =
                 reqresClient.createUser(request);
 
-        assertEquals(response.getName(), "Evgeniia");
-        assertEquals(response.getJob(), "QA Automation Engineer");
+        assertEquals(response.getName(), request.getName());
+        assertEquals(response.getJob(), request.getJob());
 
         assertNotNull(response.getId());
         assertNotNull(response.getCreatedAt());

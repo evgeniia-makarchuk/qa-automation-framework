@@ -13,6 +13,13 @@ public class ReqresClient extends BaseApiClient {
                 .get("/api/users/" + userId);
     }
 
+    public Response createUserResponse(CreateUserRequest request) {
+        return requestSpec()
+                .body(request)
+                .when()
+                .post("/api/users");
+    }
+
     public UserResponse getUserById(int userId) {
         return getUserByIdResponse(userId)
                 .then()
@@ -23,12 +30,10 @@ public class ReqresClient extends BaseApiClient {
     }
 
     public CreateUserResponse createUser(CreateUserRequest request) {
-        return requestSpec()
-                .body(request)
-                .when()
-                .post("/api/users")
+        return createUserResponse(request)
                 .then()
                 .log().all()
+                .statusCode(201)
                 .extract()
                 .as(CreateUserResponse.class);
     }
