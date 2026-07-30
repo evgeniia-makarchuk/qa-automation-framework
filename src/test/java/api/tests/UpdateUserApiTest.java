@@ -5,6 +5,7 @@ import api.models.UpdateUserRequest;
 import api.models.UpdateUserResponse;
 import org.testng.annotations.Test;
 
+import static data.UserFactory.updatedUser;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 
@@ -14,16 +15,13 @@ public class UpdateUserApiTest {
 
     @Test
     public void updateUserTest() {
-        UpdateUserRequest request = UpdateUserRequest.builder()
-                .name("Evgeniia")
-                .job("Senior QA Automation Engineer")
-                .build();
+        UpdateUserRequest request = updatedUser();
 
-        UpdateUserResponse updatedUser =
+        UpdateUserResponse response =
                 reqresClient.updateUser(2, request);
 
-        assertEquals(updatedUser.getName(), request.getName());
-        assertEquals(updatedUser.getJob(), request.getJob());
-        assertNotNull(updatedUser.getUpdatedAt());
+        assertEquals(response.getName(), request.getName());
+        assertEquals(response.getJob(), request.getJob());
+        assertNotNull(response.getUpdatedAt());
     }
 }
